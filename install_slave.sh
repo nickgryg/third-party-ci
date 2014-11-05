@@ -2,7 +2,7 @@ set -e
 
 THIS_DIR=`pwd`
 DATA_PATH=$THIS_DIR/data
-PUPPET_MODULE_PATH="--modulepath=$OSEXT_PATH/modules:system-config/modules:/root/config/modules:/etc/puppet/modules"
+PUPPET_MODULE_PATH="--modulepath=modules:system-config/modules:/etc/puppet/modules"
 
 # Pulling in variables from data repository
 . $DATA_PATH/vars.sh
@@ -14,8 +14,10 @@ CLASS_ARGS="ssh_key => '$JENKINS_SSH_PUBLIC_KEY_CONTENTS', "
 
 sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'os_ext_testing::devstack_slave': $CLASS_ARGS }"
 
-#if [[ ! -e /opt/git ]]; then
-#    sudo mkdir -p /opt/git
-#    sudo -i python /opt/nodepool-scripts/cache_git_repos.py
-#    sudo /opt/nodepool-scripts/prepare_devstack.sh
-#fi
+if [[ ! -e /opt/nodepool-scripts ]]; then
+    git https://github.com/openstack-infra/project-config 
+    sudo mkdir -p /opt/nodepool-scripts
+    sudo cp -r project-config/scripts/* /opt/nodepool-scripts/ 
+    sudo -i python /opt/nodepool-scripts/cache_git_repos.py
+    sudo /bin/bash -ex /opt/nodepool-scripts/prepare_devstack.sh
+fi
