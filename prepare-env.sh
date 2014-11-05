@@ -17,6 +17,7 @@ PUPPET_MODULE_PATH="--modulepath=$OSEXT_PATH/modules:system-config/modules:/root
 if [[ ! -e system-config ]]; then
   git clone https://github.com/openstack-infra/system-config
   sudo /bin/bash -xe system-config/install_puppet.sh
+  sed -i 's|puppet module install|puppet module install --force|' system-config/install_modules.sh
   sudo /bin/bash -xe system-config/install_modules.sh
 fi
 
