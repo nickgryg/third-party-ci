@@ -136,15 +136,15 @@ class os_ext_testing::base(
   # Although we don't use Nodepool itself, we DO make use of some
   # of the scripts that are housed in the nodepool openstack-infra/config
   # files directory.
-  file { '/opt/nodepool-scripts':
-    ensure  => directory,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    recurse => true,
-    purge   => true,
-    force   => true,
-    source  => 'puppet:///modules/openstack_project/nodepool/scripts',
-  }
+#  file { '/opt/nodepool-scripts':
+#    ensure  => directory,
+#    owner   => 'root',
+#    group   => 'root',
+#    mode    => '0755',
+#    recurse => true,
+#    purge   => true,
+#    force   => true,
+#    source  => 'puppet:///modules/openstack_project/nodepool/scripts',
+#  }
 
 }
