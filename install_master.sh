@@ -2,7 +2,7 @@ set -e
 
 THIS_DIR=`pwd`
 DATA_PATH=$THIS_DIR/data
-PUPPET_MODULE_PATH="--modulepath=$OSEXT_PATH/modules:system-config/modules:/root/config/modules:/etc/puppet/modules"
+PUPPET_MODULE_PATH="--modulepath=modules:system-config/modules:/etc/puppet/modules"
 
 # Pulling in variables from data repository
 . $DATA_PATH/vars.sh

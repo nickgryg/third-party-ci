@@ -8,7 +8,7 @@ PUPPET_MODULE_PATH="--modulepath=$OSEXT_PATH/modules:system-config/modules:/root
 . $DATA_PATH/vars.sh
 
 sed -i 's|secret|secretmysql|' system-config/modules/devstack_host/manifests/init.pp
-sudo sed '|servers_real|@servers_real|' /etc/puppet/modules/ntp/templates/ntp.conf.debian.erb
+sudo sed -i 's|servers_real|@servers_real|' /etc/puppet/modules/ntp/templates/ntp.conf.debian.erb
 
 CLASS_ARGS="ssh_key => '$JENKINS_SSH_PUBLIC_KEY_CONTENTS', "
 
