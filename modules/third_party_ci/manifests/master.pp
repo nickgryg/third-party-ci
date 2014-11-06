@@ -164,7 +164,7 @@ class third_party_ci::master (
       mode    => '0755',
       recurse => true,
       force   => true,
-      source  => 'puppet:///modules/os_ext_testing/jenkins_job_builder/config',
+      source  => 'puppet:///modules/third_party_ci/jenkins_job_builder/config',
       notify  => Exec['jenkins_jobs_update'],
     }
 
@@ -173,7 +173,7 @@ class third_party_ci::master (
       owner  => 'root',
       group  => 'root',
       mode   => '0755',
-      content => template('os_ext_testing/jenkins_job_builder/config/macros.yaml.erb'),
+      content => template('third_party_ci/jenkins_job_builder/config/macros.yaml.erb'),
       notify  => Exec['jenkins_jobs_update'],
     }
 
@@ -185,6 +185,18 @@ class third_party_ci::master (
       source => 'puppet:///modules/openstack_project/jenkins/jenkins.default',
     }
   }
+
+  $config_dir = Vcsrepo['/opt/project-config']
+
+  if (!defined($config_dir)) {
+    vcsrepo { '/opt/project-config':
+      ensure   => latest,
+      provider => git,
+      revision => 'master',
+      source   => 'https://github.com/openstack-infra/project-config',
+    }
+  }
+
 
   class { '::zuul':
     vhost_name           => "zuul",
@@ -201,7 +213,9 @@ class third_party_ci::master (
     git_name             => $git_name
   }
 
-  class { '::zuul::server': }
+  class { '::zuul::server': 
+    layout_dir  => "/opt/project-config",
+  }
   class { '::zuul::merger': }
 
 
