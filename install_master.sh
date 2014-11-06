@@ -65,4 +65,6 @@ if [[ ! -e project-config ]]; then
 	cp -r project-config/* modules/project/files/
 fi
 
+sudo mkdir -p /var/www
+
 sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'third_party_ci::master': $CLASS_ARGS }"
