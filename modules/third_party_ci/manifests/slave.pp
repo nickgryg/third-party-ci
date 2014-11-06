@@ -1,14 +1,14 @@
 # A Jenkins slave that will execute jobs that use devstack
 # to set up a full OpenStack environment for test runs.
 
-class os_ext_testing::devstack_slave (
+class third_party_ci::slave (
   $bare = true,
   $certname = $::fqdn,
   $ssh_key = '',
   $python3 = false,
   $include_pypy = false,
 ) {
-  include os_ext_testing::base
+  include third_party_ci::base
   include openstack_project::tmpcleanup
   class { 'jenkins::slave':
     bare         => $bare,

@@ -2,7 +2,7 @@
 # and installs JJB and Zuul configuration files from a repository
 # called the "data repository".
 
-class os_ext_testing::master (
+class third_party_ci::master (
   $vhost_name = $::fqdn,
   $data_repo_dir = '',
   $manage_jenkins_jobs = true,
@@ -23,7 +23,7 @@ class os_ext_testing::master (
   $git_email = 'testing@myvendor.com',
   $git_name = 'MyVendor Jenkins'
 ) {
-  include os_ext_testing::base
+  include third_party_ci::base
   include apache
 
   # Note that we need to do this here, once instead of in the jenkins::master

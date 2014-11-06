@@ -1,7 +1,7 @@
 # Simple base class, modeled after the base.pp manifest in
 # openstack-infra/config/modules/openstack_project/manifests/base.pp
 
-class os_ext_testing::base(
+class third_party_ci::base(
   $certname = $::fqdn,
 ) {
   if ($::osfamily == 'Debian') {
@@ -27,18 +27,6 @@ class os_ext_testing::base(
   } 
   include sudoers
 
-  if ($::lsbdistcodename == 'oneiric') {
-    apt::ppa { 'ppa:git-core/ppa': }
-    package { 'git':
-      ensure  => latest,
-      require => Apt::Ppa['ppa:git-core/ppa'],
-    }
-  } else {
-    package { 'git':
-      ensure => present,
-    }
-  }
-
   if ($::operatingsystem == 'Fedora') {
 
     package { 'hiera':
@@ -52,7 +40,6 @@ class os_ext_testing::base(
       subscribe   => Package['hiera'],
       refreshonly => true,
     }
-
   }
 
   package { $packages:

@@ -59,4 +59,4 @@ CLASS_ARGS="$CLASS_ARGS url_pattern => '$URL_PATTERN', "
 sudo mkdir -p /etc/jenkins_jobs/config
 sudo cp -r $DATA_PATH/etc/jenkins_jobs/config/* /etc/jenkins_jobs/config/
 
-sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'os_ext_testing::master': $CLASS_ARGS }"
+sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'third_party_ci::master': $CLASS_ARGS }"

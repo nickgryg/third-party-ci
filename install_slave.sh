@@ -12,7 +12,7 @@ sudo sed -i 's|servers_real|@servers_real|' /etc/puppet/modules/ntp/templates/nt
 
 CLASS_ARGS="ssh_key => '$JENKINS_SSH_PUBLIC_KEY_CONTENTS', "
 
-sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'os_ext_testing::devstack_slave': $CLASS_ARGS }"
+sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'third_party_ci::slave': $CLASS_ARGS }"
 
 if [[ ! -e /opt/nodepool-scripts ]]; then
     git https://github.com/openstack-infra/project-config 
