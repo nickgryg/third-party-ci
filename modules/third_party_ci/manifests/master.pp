@@ -186,18 +186,6 @@ class third_party_ci::master (
     }
   }
 
-  $config_dir = Vcsrepo['/opt/project-config']
-
-  if (!defined($config_dir)) {
-    vcsrepo { '/opt/project-config':
-      ensure   => latest,
-      provider => git,
-      revision => 'master',
-      source   => 'https://github.com/openstack-infra/project-config',
-    }
-  }
-
-
   class { '::zuul':
     vhost_name           => "zuul",
     gearman_server       => $gearman_server,
@@ -214,7 +202,7 @@ class third_party_ci::master (
   }
 
   class { '::zuul::server': 
-    layout_dir  => "/opt/project-config",
+    layout_dir  => "puppet:///modules/project/zuul",
   }
   class { '::zuul::merger': }
 
@@ -254,7 +242,7 @@ class third_party_ci::master (
 
   file { '/etc/zuul/openstack_functions.py':
     ensure => present,
-    source => 'puppet:///modules/openstack_project/zuul/openstack_functions.py',
+    source => 'puppet:///modules/project/zuul/openstack_functions.py',
     notify => Exec['zuul-reload'],
   }
 

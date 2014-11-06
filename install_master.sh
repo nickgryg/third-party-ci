@@ -59,4 +59,10 @@ CLASS_ARGS="$CLASS_ARGS url_pattern => '$URL_PATTERN', "
 sudo mkdir -p /etc/jenkins_jobs/config
 sudo cp -r $DATA_PATH/etc/jenkins_jobs/config/* /etc/jenkins_jobs/config/
 
+if [[ ! -e project-config ]]; then
+	git clone https://github.com/openstack-infra/project-config
+	mkdir -p modules/project/files
+	cp -r project-config/* modules/project/files/
+fi
+
 sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'third_party_ci::master': $CLASS_ARGS }"
