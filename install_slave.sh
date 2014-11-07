@@ -6,13 +6,15 @@ PUPPET_MODULE_PATH="--modulepath=modules:system-config/modules:/etc/puppet/modul
 
 # Pulling in variables from data repository
 . $DATA_PATH/vars.sh
+JENKINS_SSH_PRIVATE_KEY_CONTENTS=`sudo cat $DATA_PATH/$JENKINS_SSH_KEY_PATH`
+JENKINS_SSH_PUBLIC_KEY_CONTENTS=`sudo cat $DATA_PATH/$JENKINS_SSH_KEY_PATH.pub`
 
 sed -i 's|secret|secretmysql|' system-config/modules/devstack_host/manifests/init.pp
-sudo sed -i 's|servers_real|@servers_real|' /etc/puppet/modules/ntp/templates/ntp.conf.debian.erb
+#sudo sed -i 's|servers_real|@servers_real|' /etc/puppet/modules/ntp/templates/ntp.conf.debian.erb
 
 CLASS_ARGS="ssh_key => '$JENKINS_SSH_PUBLIC_KEY_CONTENTS', "
 
-sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'third_party_ci::slave': $CLASS_ARGS }"
+sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'openstack_project::slave': $CLASS_ARGS }"
 
 if [[ ! -e /opt/nodepool-scripts ]]; then
     sudo mkdir -p /opt/git

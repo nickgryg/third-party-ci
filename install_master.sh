@@ -6,6 +6,8 @@ PUPPET_MODULE_PATH="--modulepath=modules:system-config/modules:/etc/puppet/modul
 
 # Pulling in variables from data repository
 . $DATA_PATH/vars.sh
+JENKINS_SSH_PRIVATE_KEY_CONTENTS=`sudo cat $DATA_PATH/$JENKINS_SSH_KEY_PATH`
+JENKINS_SSH_PUBLIC_KEY_CONTENTS=`sudo cat $DATA_PATH/$JENKINS_SSH_KEY_PATH.pub`
 
 PUBLISH_HOST=${PUBLISH_HOST:-localhost}
 
