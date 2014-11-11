@@ -14,7 +14,7 @@ sed -i 's|secret|secretmysql|' system-config/modules/devstack_host/manifests/ini
 
 CLASS_ARGS="ssh_key => '$JENKINS_SSH_PUBLIC_KEY_CONTENTS', "
 
-sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'openstack_project::slave': $CLASS_ARGS }"
+sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'third_party_ci::slave': $CLASS_ARGS }"
 
 if [[ ! -e /opt/nodepool-scripts ]]; then
     sudo mkdir -p /opt/git
