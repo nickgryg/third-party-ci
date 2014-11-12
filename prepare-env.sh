@@ -11,7 +11,7 @@ DATA_REPO_INFO_FILE=$THIS_DIR/.data_repo_info
 DATA_PATH=$THIS_DIR/data
 OSEXT_PATH=$THIS_DIR/third-party-ci
 OSEXT_REPO=https://github.com/nickgryg/third-party-ci
-PUPPET_MODULE_PATH="--modulepath=$OSEXT_PATH/modules:system-config/modules:/root/config/modules:/etc/puppet/modules"
+PUPPET_MODULE_PATH="--modulepath=modules:system-config/modules:/etc/puppet/modules"
 
 # Install Puppet and the OpenStack Infra Config source tree
 if [[ ! -e system-config ]]; then
