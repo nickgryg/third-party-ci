@@ -17,10 +17,11 @@ CLASS_ARGS="ssh_key => '$JENKINS_SSH_PUBLIC_KEY_CONTENTS', "
 sudo puppet apply --verbose $PUPPET_MODULE_PATH -e "class {'third_party_ci::slave': $CLASS_ARGS }"
 
 if [[ ! -e /opt/nodepool-scripts ]]; then
-    sudo mkdir -p /opt/git
+    sudo mkdir -p /opt/stack/new
     git clone https://github.com/openstack-infra/project-config 
     sudo mkdir -p /opt/nodepool-scripts
     sudo cp -r project-config/nodepool/scripts/* /opt/nodepool-scripts/ 
+    sudo sed -i 's|/opt/git|/opt/stack/new|' /opt/nodepool-scripts/cache_git_repos.py
     sudo -i python /opt/nodepool-scripts/cache_git_repos.py
     sudo /bin/bash -ex /opt/nodepool-scripts/prepare_devstack.sh
 fi
